@@ -3,6 +3,7 @@ package cscb07.group4.androidproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,13 +23,14 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef;
     private EditText etEmail, etPwd;
-    private Button btnRegisterAdmin, btnRegisterStu;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Button btnRegisterAdmin, btnRegisterStu, btnLogin;
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
@@ -37,6 +39,16 @@ public class RegisterActivity extends AppCompatActivity {
         etPwd = findViewById(R.id.editTextTextPassword);
         btnRegisterAdmin = findViewById(R.id.btn_admin_register);
         btnRegisterStu = findViewById(R.id.btn_student_register);
+
+        btnLogin = findViewById(R.id.btn_signIn);
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnRegisterAdmin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -56,9 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
                             admin.setPwd(pwd);
 
                             mDatabaseRef.child("AdminAccount").child(firebaseUser.getUid()).setValue(admin);
-                            Toast.makeText(RegisterActivity.this, "Registered Successfully As Admin", Toast.LENGTH_SHORT);
+                            Toast.makeText(RegisterActivity.this, "Registered Successfully As Admin", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT);
+                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -83,9 +95,9 @@ public class RegisterActivity extends AppCompatActivity {
                             student.setPwd(pwd);
 
                             mDatabaseRef.child("StudentAccount").child(firebaseUser.getUid()).setValue(student);
-                            Toast.makeText(RegisterActivity.this, "Registered Successfully As Student", Toast.LENGTH_SHORT);
+                            Toast.makeText(RegisterActivity.this, "Registered Successfully As Student", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT);
+                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

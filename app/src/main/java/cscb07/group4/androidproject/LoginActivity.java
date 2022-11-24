@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef;
     private EditText etEmail, etPwd;
-    private Button btnLogin;
+    private Button btnLogin, btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,16 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.editTextTextEmailAddress);
         etPwd = findViewById(R.id.editTextTextPassword);
         btnLogin = findViewById(R.id.btn_signIn);
+
+        btnSignup = findViewById(R.id.btn_register);
+        btnSignup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
