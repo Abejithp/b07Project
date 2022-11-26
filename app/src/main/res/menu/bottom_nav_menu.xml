@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- TODO Change to android:id="@+id/nav_timeline" later, using the Login/Register buttons for now -->
+    <item
+        android:id="@+id/fragment_main"
+        android:icon="@drawable/timeline_icon"
+        android:title="@string/nav_timeline" />
+
+    <item
+        android:id="@+id/nav_manage"
+        android:icon="@drawable/manage_icon"
+        android:title="@string/nav_manage" />
+
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/account_icon"
+        android:title="@string/nav_account" />
+
+</menu>
