@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">AndroidProject</string>
+
+    <!-- Navbar -->
+    <string name="nav_timeline">Timeline</string>
+    <string name="nav_manage">Manage Courses</string>
+    <string name="nav_account">Account</string>
+
+    <!-- Fragments -->
+    <string name="fragment_main">Main Menu</string>
+    <string name="fragment_login">Sign In</string>
+    <string name="fragment_register">Sign Up</string>
 </resources>
