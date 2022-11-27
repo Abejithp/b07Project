@@ -1,5 +1,6 @@
 package cscb07.group4.androidproject;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,6 +9,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import cscb07.group4.androidproject.databinding.ActivityMainBinding;
 
@@ -39,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 binding.bottomNavView.setVisibility(View.VISIBLE);
             }
         });
-    }
 
+        CourseManger.getInstance().refreshCourses();
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

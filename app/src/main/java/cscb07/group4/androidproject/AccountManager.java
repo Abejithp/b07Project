@@ -9,9 +9,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public final class AuthManager {
+public final class AccountManager {
 
-    private static final AuthManager INSTANCE = new AuthManager();
+    private static final AccountManager INSTANCE = new AccountManager();
 
     private Account account;
 
@@ -27,7 +27,7 @@ public final class AuthManager {
 
                 database.child("accounts").child(firebaseUser.getUid()).get().addOnCompleteListener(dataTask -> {
                     if (dataTask.isSuccessful()) {
-                        AuthManager.this.account = dataTask.getResult().getValue(Account.class);
+                        AccountManager.this.account = dataTask.getResult().getValue(Account.class);
                     }
                 });
             }
@@ -50,7 +50,7 @@ public final class AuthManager {
                 account.setPwd(pwd);
                 account.setType(type);
 
-                AuthManager.this.account = account;
+                AccountManager.this.account = account;
 
                 database.child("accounts").child(firebaseUser.getUid()).setValue(account);
             }
@@ -74,7 +74,7 @@ public final class AuthManager {
         return account;
     }
 
-    public static AuthManager getInstance() {
+    public static AccountManager getInstance() {
         return INSTANCE;
     }
 }

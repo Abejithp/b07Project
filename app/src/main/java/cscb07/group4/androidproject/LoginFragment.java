@@ -14,8 +14,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import cscb07.group4.androidproject.databinding.FragmentLoginBinding;
 
@@ -49,7 +47,7 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
-                AuthManager.getInstance().login(email, pwd, getActivity(), new OnCompleteListener<AuthResult>() {
+                AccountManager.getInstance().login(email, pwd, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {

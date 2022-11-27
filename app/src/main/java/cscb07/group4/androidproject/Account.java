@@ -14,7 +14,6 @@ public class Account {
     private List<String> courses_taken = new ArrayList<>();
     private List<String> courses_wanted = new ArrayList<>();
 
-
     public Account() {}
 
     public String getFirstName() {
@@ -71,5 +70,13 @@ public class Account {
 
     public void setCourses_taken(List<String> courses_taken) {
         this.courses_taken = courses_taken;
+    }
+
+    public List<String> getCourses_wanted() {
+        return courses_wanted;
+    }
+
+    public void setCourses_wanted(List<String> courses_wanted) {
+        this.courses_wanted = courses_wanted;
     }
 }

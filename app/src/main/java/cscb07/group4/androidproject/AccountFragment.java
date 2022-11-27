@@ -20,8 +20,8 @@ public class AccountFragment extends Fragment {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        AuthManager auth = AuthManager.getInstance();
-        if (AuthManager.getInstance().isLoggedIn()) {
+        AccountManager auth = AccountManager.getInstance();
+        if (AccountManager.getInstance().isLoggedIn()) {
             binding.nameView.setText(auth.getAccount().getFirstName() + " " + auth.getAccount().getLastName());
             binding.emailView.setText(auth.getAccount().getEmail());
 
@@ -35,7 +35,7 @@ public class AccountFragment extends Fragment {
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthManager.getInstance().logout();
+                AccountManager.getInstance().logout();
                 NavHostFragment.findNavController(AccountFragment.this)
                         .navigate(R.id.action_AccountFragment_to_MainFragment);
             }

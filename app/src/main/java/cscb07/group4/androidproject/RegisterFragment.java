@@ -47,7 +47,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                AuthManager.getInstance().register(email, pwd, AccountType.ADMIN, getActivity(), new OnCompleteListener<AuthResult>() {
+                AccountManager.getInstance().register(email, pwd, AccountType.ADMIN, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -75,7 +75,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                AuthManager.getInstance().register(email, pwd, AccountType.STUDENT, getActivity(), new OnCompleteListener<AuthResult>() {
+                AccountManager.getInstance().register(email, pwd, AccountType.STUDENT, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
