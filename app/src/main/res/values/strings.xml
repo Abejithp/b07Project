@@ -12,5 +12,11 @@
     <string name="fragment_register">Sign Up</string>
     <string name="fragment_timeline">Timeline</string>
 
-
+    <!-- Account Page -->
+    <string name="not_logged_in">Not Logged In</string>
+    <string name="na">N/A</string>
+    <string name="account_info">Account Info</string>
+    <string name="account_type_na">Account Type: N/A</string>
+    <string name="password_na">Password: N/A</string>
+    <string name="logout">LOGOUT</string>
 </resources>

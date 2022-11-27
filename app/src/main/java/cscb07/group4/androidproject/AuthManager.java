@@ -57,12 +57,21 @@ public final class AuthManager {
         });
     }
 
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        this.account = null;
+    }
+
     public boolean isLoggedIn() {
         return this.account != null;
     }
 
     public boolean isAdmin() {
         return isLoggedIn() && this.account.getType() == AccountType.ADMIN;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     public static AuthManager getInstance() {

@@ -41,6 +41,10 @@
         android:name="cscb07.group4.androidproject.AccountFragment"
         android:label="Account"
         tools:layout="@layout/fragment_account">
+
+        <action
+            android:id="@+id/action_AccountFragment_to_MainFragment"
+            app:destination="@id/fragment_main" />
     </fragment>
 
     <fragment

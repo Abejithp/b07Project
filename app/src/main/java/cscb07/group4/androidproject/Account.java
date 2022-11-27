@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Account {
 
+    private String firstName = "First"; // TODO Add to registration.
+    private String lastName = "Last";
     private String idToken;
     private String email;
     private String pwd;
@@ -14,6 +16,22 @@ public class Account {
 
 
     public Account() {}
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public String getIdToken() {
         return idToken;
