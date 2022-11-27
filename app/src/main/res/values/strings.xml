@@ -10,4 +10,7 @@
     <string name="fragment_main">Main Menu</string>
     <string name="fragment_login">Sign In</string>
     <string name="fragment_register">Sign Up</string>
+    <string name="fragment_timeline">Timeline</string>
+
+
 </resources>

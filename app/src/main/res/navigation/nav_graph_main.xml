@@ -5,6 +5,16 @@
     android:id="@+id/nav_graph_main"
     app:startDestination="@id/fragment_main">
 
+
+    <fragment
+        android:id="@+id/fragment_timeline"
+        android:name="cscb07.group4.androidproject.TimelineFragment"
+        android:label="@string/fragment_timeline"
+        tools:layout="@layout/fragment_timeline">
+
+    </fragment>
+
+
     <fragment
         android:id="@+id/fragment_main"
         android:name="cscb07.group4.androidproject.MainFragment"
@@ -42,6 +52,9 @@
         <action
             android:id="@+id/action_LoginFragment_to_MainFragment"
             app:destination="@id/fragment_main" />
+        <action
+            android:id="@+id/action_LoginFragment_to_TimelineFragment"
+            app:destination="@id/fragment_timeline" />
         <action
             android:id="@+id/action_LoginFragment_to_RegisterFragment"
             app:destination="@id/fragment_register" />

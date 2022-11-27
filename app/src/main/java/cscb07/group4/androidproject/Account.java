@@ -10,6 +10,8 @@ public class Account {
     private String pwd;
     private AccountType type;
     private List<String> courses_taken = new ArrayList<>();
+    private List<String> courses_wanted = new ArrayList<>();
+
 
     public Account() {}
 
