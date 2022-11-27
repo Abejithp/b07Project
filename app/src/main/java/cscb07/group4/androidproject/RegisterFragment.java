@@ -14,11 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import cscb07.group4.androidproject.databinding.FragmentRegisterBinding;
 
@@ -40,9 +36,6 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-
         binding.btnAdminRegister.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -54,18 +47,10 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                mFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                AuthManager.getInstance().register(email, pwd, AccountType.ADMIN, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-
-                            Admin admin = new Admin();
-                            admin.setIdToken(firebaseUser.getUid());
-                            admin.setEmail(firebaseUser.getEmail());
-                            admin.setPwd(pwd);
-
-                            mDatabaseRef.child("AdminAccount").child(firebaseUser.getUid()).setValue(admin);
                             Toast.makeText(getContext(), "Registered Successfully As Admin", Toast.LENGTH_SHORT).show();
                         }else{
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
@@ -90,18 +75,10 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                mFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                AuthManager.getInstance().register(email, pwd, AccountType.STUDENT, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-
-                            Student student = new Student();
-                            student.setIdToken(firebaseUser.getUid());
-                            student.setEmail(firebaseUser.getEmail());
-                            student.setPwd(pwd);
-
-                            mDatabaseRef.child("StudentAccount").child(firebaseUser.getUid()).setValue(student);
                             Toast.makeText(getContext(), "Registered Successfully As Student", Toast.LENGTH_SHORT).show();
                         }else{
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

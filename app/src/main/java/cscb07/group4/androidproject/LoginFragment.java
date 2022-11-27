@@ -49,8 +49,7 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, pwd)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                AuthManager.getInstance().login(email, pwd, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {

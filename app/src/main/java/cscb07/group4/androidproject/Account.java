@@ -1,18 +1,17 @@
 package cscb07.group4.androidproject;
 
-public class Admin {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Account {
+
     private String idToken;
     private String email;
     private String pwd;
-    private String status;
+    private AccountType type;
+    private List<String> courses_taken = new ArrayList<>();
 
-    public String getStatus() { return status; }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Admin(){}
+    public Account() {}
 
     public String getIdToken() {
         return idToken;
@@ -36,5 +35,21 @@ public class Admin {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public List<String> getCourses_taken() {
+        return courses_taken;
+    }
+
+    public void setCourses_taken(List<String> courses_taken) {
+        this.courses_taken = courses_taken;
     }
 }
