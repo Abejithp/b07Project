@@ -51,6 +51,8 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            binding.editTextTextEmailAddress.setText(null);
+                            binding.editTextTextPassword.setText(null);
                             NavHostFragment.findNavController(LoginFragment.this)
                                     .navigate(R.id.action_LoginFragment_to_TimelineFragment);
                             Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
