@@ -9,9 +9,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class AccountManager {
 
     private static final AccountManager INSTANCE = new AccountManager();
+
+    private List<AccountChangeListener> listeners = new ArrayList<>();
 
     private Account account;
 
@@ -27,7 +32,7 @@ public final class AccountManager {
 
                 database.child("accounts").child(firebaseUser.getUid()).get().addOnCompleteListener(dataTask -> {
                     if (dataTask.isSuccessful()) {
-                        AccountManager.this.account = dataTask.getResult().getValue(Account.class);
+                        AccountManager.this.setAccount(dataTask.getResult().getValue(Account.class));
                     }
                 });
             }
@@ -41,7 +46,7 @@ public final class AccountManager {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(activity, task -> {
             onComplete.onComplete(task);
 
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = auth.getCurrentUser();
 
                 Account account = new Account();
@@ -50,7 +55,7 @@ public final class AccountManager {
                 account.setPwd(pwd);
                 account.setType(type);
 
-                AccountManager.this.account = account;
+                AccountManager.this.setAccount(account);
 
                 database.child("accounts").child(firebaseUser.getUid()).setValue(account);
             }
@@ -59,7 +64,32 @@ public final class AccountManager {
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        this.account = null;
+        setAccount(null);
+    }
+
+    // TODO Remove later...
+    @Deprecated
+    public void becomeAdmin() {
+        Account account = new Account();
+        account.setType(AccountType.ADMIN);
+        account.setEmail("email@gmail.com");
+        account.setPwd("password");
+        this.setAccount(account);
+    }
+
+    public void registerListener(AccountChangeListener listener) {
+        this.listeners.add(listener);
+    }
+
+    private void onAccountChange() {
+        for (AccountChangeListener runnable : this.listeners) {
+            runnable.onAccountChange();
+        }
+    }
+
+    private void setAccount(Account account) {
+        this.account = account;
+        onAccountChange();
     }
 
     public boolean isLoggedIn() {
