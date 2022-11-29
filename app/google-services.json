@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "721485810233",
+    "firebase_url": "https://courseplannerapp-b61bf-default-rtdb.firebaseio.com",
+    "project_id": "courseplannerapp-b61bf",
+    "storage_bucket": "courseplannerapp-b61bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721485810233:android:b380634b7484d45afcdbe8",
+        "android_client_info": {
+          "package_name": "cscb07.group4.androidproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721485810233-r4mbr1n0q41q31771odu6dttps7q0l08.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ4Z__zwnRWVBxvTfJXbnf51BDDUMMTY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721485810233-r4mbr1n0q41q31771odu6dttps7q0l08.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
