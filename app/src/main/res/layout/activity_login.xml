@@ -14,7 +14,7 @@
         android:layout_width="272dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif"
         android:text="Login to continue"
         android:textSize="30sp" />
 
