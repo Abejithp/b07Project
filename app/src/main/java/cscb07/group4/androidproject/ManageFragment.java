@@ -25,54 +25,6 @@ import java.util.ArrayList;
 import cscb07.group4.androidproject.databinding.FragmentManageBinding;
 
 public class ManageFragment extends Fragment {
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Course> courseList;
-    FirebaseAuth firebaseAuth;
-    FragmentManageBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView recyclerView;
-        FirebaseDatabase database;
-        DatabaseReference databaseReference;
-        View view = inflater.inflate(R.layout.fragment_manage, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        firebaseAuth = FirebaseAuth.getInstance();
-        courseList = new ArrayList<>();
 
-        recyclerView.setHasFixedSize(true);
-        adapter = new AdminAdapter(courseList);
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("courses");
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                courseList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Course course = snapshot.getValue(Course.class);
-                    courseList.add(course);
-                }
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("ManageFragment", String.valueOf(error.toException()));
-            }
-        });
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new AdminAdapter(courseList);
-        recyclerView.setAdapter(adapter);
-        return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 }
