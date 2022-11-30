@@ -1,5 +1,6 @@
 package cscb07.group4.androidproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,24 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(AccountFragment.this)
                         .navigate(R.id.action_AccountFragment_to_LoginFragment);
+            }
+        });
+
+        binding.register2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), signup.class);
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+
+        binding.signin2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), login.class);
+                startActivity(intent);
+                getActivity().finish();
+
             }
         });
 
