@@ -1,4 +1,4 @@
-package cscb07.group4.androidproject;
+package cscb07.group4.androidproject.manager;
 
 import java.util.List;
 import java.util.Objects;

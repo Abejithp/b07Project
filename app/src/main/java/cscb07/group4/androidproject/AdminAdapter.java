@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import cscb07.group4.androidproject.manager.Course;
+import cscb07.group4.androidproject.manager.Session;
+
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHolder>{
 
     public Context context;

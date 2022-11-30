@@ -19,5 +19,6 @@
     <string name="account_info">Account Info</string>
     <string name="account_type">Account Type: %1$s</string>
     <string name="password">Password: %1$s</string>
+    <string name="token">Token: %1$s</string>
     <string name="logout">LOGOUT</string>
 </resources>

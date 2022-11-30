@@ -3,6 +3,8 @@ package cscb07.group4.androidproject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cscb07.group4.androidproject.manager.AccountType;
+
 public class Account {
 
     private String firstName = "First"; // TODO Add to registration.

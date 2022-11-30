@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import cscb07.group4.androidproject.databinding.FragmentAdminCourseBinding;
+import cscb07.group4.androidproject.manager.Course;
 
 public class AdminManageFragment extends Fragment {
 

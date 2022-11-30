@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 import cscb07.group4.androidproject.databinding.FragmentLoginBinding;
+import cscb07.group4.androidproject.manager.AccountManager;
 
 public class LoginFragment extends Fragment {
 

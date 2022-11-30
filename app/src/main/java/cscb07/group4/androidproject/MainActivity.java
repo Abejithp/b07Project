@@ -10,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import cscb07.group4.androidproject.databinding.ActivityMainBinding;
+import cscb07.group4.androidproject.manager.AccountManager;
+import cscb07.group4.androidproject.manager.CourseManger;
 
 public class MainActivity extends AppCompatActivity implements AccountChangeListener {
 

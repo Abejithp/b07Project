@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import cscb07.group4.androidproject.databinding.FragmentAccountBinding;
+import cscb07.group4.androidproject.manager.AccountManager;
 
 public class AccountFragment extends Fragment {
 
@@ -75,6 +76,7 @@ public class AccountFragment extends Fragment {
             binding.emailView.setText(auth.getAccount().getEmail());
             binding.accountTypeView.setText(getString(R.string.account_type, auth.getAccount().getType().toString()));
             binding.passwordView.setText(getString(R.string.password, auth.getAccount().getPwd()));
+            binding.tokenView.setText(getString(R.string.token, auth.getAccount().getIdToken()));
 
             binding.logoutButton.setVisibility(View.VISIBLE);
 
@@ -83,6 +85,7 @@ public class AccountFragment extends Fragment {
             binding.emailView.setText(getString(R.string.na));
             binding.accountTypeView.setText(getString(R.string.account_type, getString(R.string.na)));
             binding.passwordView.setText(getString(R.string.password, getString(R.string.na)));
+            binding.tokenView.setText(getString(R.string.token, getString(R.string.na)));
 
             binding.logoutButton.setVisibility(View.INVISIBLE);
         }

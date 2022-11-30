@@ -1,4 +1,4 @@
-package cscb07.group4.androidproject;
+package cscb07.group4.androidproject.manager;
 
 import android.app.Activity;
 
@@ -12,6 +12,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import cscb07.group4.androidproject.Account;
+import cscb07.group4.androidproject.AccountChangeListener;
+
 public final class AccountManager {
 
     private static final AccountManager INSTANCE = new AccountManager();
@@ -19,6 +22,34 @@ public final class AccountManager {
     private List<AccountChangeListener> listeners = new ArrayList<>();
 
     private Account account;
+
+    public static AccountManager getInstance() {
+        return INSTANCE;
+    }
+
+    /**
+     * @return If the user is currently logged in.
+     */
+    public boolean isLoggedIn() {
+        return this.account != null;
+    }
+
+    /**
+     * Get info about the currently logged in user. See {@link #isLoggedIn()} to check if the
+     * user is logged in first.
+     *
+     * @return The Account object containing the user's information.
+     */
+    public Account getAccount() {
+        return account;
+    }
+
+    /**
+     * @return If the current user has admin permissions.
+     */
+    public boolean isAdmin() {
+        return isLoggedIn() && this.account.getType() == AccountType.ADMIN;
+    }
 
     public void login(String email, String pwd, Activity activity, OnCompleteListener<AuthResult> onComplete) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -70,8 +101,9 @@ public final class AccountManager {
     // TODO Remove later...
     @Deprecated
     public void becomeAdmin() {
-
         Account account = new Account();
+        account.setFirstName("Amongus");
+        account.setLastName("Faded");
         account.setIdToken("XX_69_AMONGUS_420_XXFADED");
         account.setType(AccountType.ADMIN);
         account.setEmail("email@gmail.com");
@@ -92,21 +124,5 @@ public final class AccountManager {
     private void setAccount(Account account) {
         this.account = account;
         onAccountChange();
-    }
-
-    public boolean isLoggedIn() {
-        return this.account != null;
-    }
-
-    public boolean isAdmin() {
-        return isLoggedIn() && this.account.getType() == AccountType.ADMIN;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public static AccountManager getInstance() {
-        return INSTANCE;
     }
 }

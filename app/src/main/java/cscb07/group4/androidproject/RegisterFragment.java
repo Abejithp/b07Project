@@ -17,6 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
 import cscb07.group4.androidproject.databinding.FragmentRegisterBinding;
+import cscb07.group4.androidproject.manager.AccountManager;
+import cscb07.group4.androidproject.manager.AccountType;
 
 public class RegisterFragment extends Fragment {
 
