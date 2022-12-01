@@ -12,6 +12,7 @@
     <string name="fragment_login">Sign In</string>
     <string name="fragment_register">Sign Up</string>
     <string name="fragment_timeline">Timeline</string>
+    <string name="fragment_add_course">Add Course</string>
 
     <!-- Account Page -->
     <string name="not_logged_in">Not Logged In</string>

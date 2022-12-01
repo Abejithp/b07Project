@@ -13,6 +13,14 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_add_course"
+        android:name="cscb07.group4.androidproject.AddCoursePopUp"
+        android:label="@string/fragment_add_course"
+        tools:layout="@layout/fragment_add_course">
+
+    </fragment>
+
 
 
 
