@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
                             binding.editTextTextEmailAddress.setText(null);
                             binding.editTextTextPassword.setText(null);
                             NavHostFragment.findNavController(LoginFragment.this)
-                                    .navigate(R.id.action_LoginFragment_to_TimelineFragment);
+                                    .navigate(R.id.action_LoginFragment_to_EditCourseFragment);
                             Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();

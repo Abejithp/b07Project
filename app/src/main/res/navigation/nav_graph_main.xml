@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/fragment_timeline">
+    app:startDestination="@id/fragment_edit_courses">
 
     <fragment
         android:id="@+id/fragment_timeline"
@@ -13,8 +13,11 @@
 
     </fragment>
 
+
+
+
     <fragment
-        android:id="@+id/nav_manage"
+        android:id="@+id/fragment_edit_courses"
         android:name="cscb07.group4.androidproject.ManageFragment"
         android:label="Edit Courses (Student)"
         tools:layout="@layout/fragment_manage">
@@ -51,8 +54,8 @@
             android:id="@+id/action_LoginFragment_to_AccountFragment"
             app:destination="@id/nav_account" />
         <action
-            android:id="@+id/action_LoginFragment_to_TimelineFragment"
-            app:destination="@id/fragment_timeline" />
+            android:id="@+id/action_LoginFragment_to_EditCourseFragment"
+            app:destination="@id/fragment_edit_courses" />
         <action
             android:id="@+id/action_LoginFragment_to_RegisterFragment"
             app:destination="@id/fragment_register" />

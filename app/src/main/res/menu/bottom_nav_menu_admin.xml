@@ -7,7 +7,7 @@
         android:title="@string/nav_timeline" />
 
     <item
-        android:id="@+id/nav_manage"
+        android:id="@+id/fragment_edit_courses"
         android:icon="@drawable/edit_icon"
         android:title="@string/nav_manage" />
 

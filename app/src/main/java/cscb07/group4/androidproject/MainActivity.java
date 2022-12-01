@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements AccountChangeList
 
         // These are the menus without the back button (top action bar)
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.fragment_timeline, R.id.nav_manage, R.id.fragment_admin_manage, R.id.nav_account)
+                R.id.fragment_timeline, R.id.fragment_edit_courses, R.id.fragment_admin_manage, R.id.nav_account)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
