@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -114,46 +113,48 @@ public class TimelineFragment extends Fragment {
         timeline.put(0, new HashSet<>()); // Fall 2022
         for (String courseCode : StudentCourseManager.getInstance().getWantedCourses()) {
             Course course = CourseManger.getInstance().getCourseByID(courseCode);
-            if (course != null && !course.getSessions().isEmpty()) {
+            if (course != null) {
                 addTimelineCourse(course);
             }
         }
     }
 
     private int addTimelineCourse(Course course) {
-        int maxSession = -1;
+        if (course.getSessions().isEmpty()) {
+            return -1;
+        }
+
+        int session = -1;
         if (course.getPrerequisites() != null) {
             for (String prereqCourseCode : course.getPrerequisites()) {
-                Course prereqCourse = CourseManger.getInstance().getCourseByID(prereqCourseCode);
-                maxSession = Math.max(maxSession, addTimelineCourse(prereqCourse));
+                // Must add prerequisite course first if it hasn't been taken
+                if (!StudentCourseManager.getInstance().getTakenCourses().contains(prereqCourseCode)) {
+                    Course prereqCourse = CourseManger.getInstance().getCourseByID(prereqCourseCode);
+                    session = Math.max(session, addTimelineCourse(prereqCourse));
+                }
             }
+            // Add the course after all of its prerequisite courses
+            session = getNextSession(session);
+
+        } else {
+            // If no prerequisites, add it to the first session
+            session = timeline.firstKey();
         }
 
-        if (maxSession == -1) {
-            maxSession = getFirstSession();
-        } else {
-            maxSession++;
+        // Increment the session until there is room & the course is offered
+        while (timeline.get(session).size() > 6 ||
+                !course.getSessions().contains(Session.values()[session % 3])) {
+            session = getNextSession(session);
         }
-        // Increment session until we are in an offered session
-        while (!course.getSessions().contains(Session.values()[maxSession % 3])) {
-            maxSession++;
-        }
-        timeline.get(maxSession).add(course);
-        return maxSession;
+        timeline.get(session).add(course);
+        return session;
     }
 
-    private int getFirstSession() {
-        for (Map.Entry<Integer, Set<Course>> entry : timeline.entrySet()) {
-            // Cannot have more than 6 courses per session
-            if (entry.getValue().size() >= 6) {
-                continue;
-            }
-            return entry.getKey();
+    private int getNextSession(int session) {
+        int nextSession = session + 1;
+        if (!timeline.containsKey(nextSession)) {
+            timeline.put(nextSession, new HashSet<>());
         }
-        // No free session found, add new session
-        int nextSession = timeline.lastKey() + 1;
-        timeline.put(timeline.lastKey() + 1, new HashSet<>());
         return nextSession;
     }
-
 }
