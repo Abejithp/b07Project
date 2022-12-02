@@ -20,6 +20,7 @@ import java.util.Locale;
 import cscb07.group4.androidproject.databinding.FragmentAddCourseBinding;
 import cscb07.group4.androidproject.databinding.FragmentManageBinding;
 import cscb07.group4.androidproject.manager.AccountManager;
+import cscb07.group4.androidproject.manager.StudentCourseManager;
 
 public class ManageFragment extends Fragment {
     private FragmentManageBinding binding;
@@ -33,12 +34,11 @@ public class ManageFragment extends Fragment {
         binding.buttonAddTakenCourse.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new AddCoursePopUpDialogFragment(AccountManager.getInstance().getAccount().
-                        getCourses_taken(), new Runnable() {
+                new AddCoursePopUpDialogFragment(CourseType.TAKEN, new Runnable() {
                     @Override
                     public void run() {
-                        refreshCourses(AccountManager.getInstance().getAccount().getCourses_taken(),
-                                binding.takenCourseLinearLayout);
+                        refreshCourses(StudentCourseManager.getInstance().getTakenCourses(),
+                                CourseType.TAKEN);
                     }
                 }).show(getChildFragmentManager(),"dialog_select_course");
             }
@@ -47,65 +47,71 @@ public class ManageFragment extends Fragment {
         binding.buttonAddWantedCourse.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new AddCoursePopUpDialogFragment(AccountManager.getInstance().getAccount().
-                        getCourses_wanted(), new Runnable() {
+                new AddCoursePopUpDialogFragment(CourseType.WANTED, new Runnable() {
                     @Override
                     public void run() {
-                        refreshCourses(AccountManager.getInstance().getAccount().getCourses_wanted(),
-                                binding.wantedCourseLinearLayout);
+                        refreshCourses(StudentCourseManager.getInstance().getWantedCourses(),
+                                CourseType.WANTED);
                     }
                 }).show(getChildFragmentManager(),"dialog_select_course");
             }
         });
 
-
+        StudentCourseManager.getInstance().refreshCourses(() -> {
+            refreshCourses(CourseType.TAKEN.getCourses(), CourseType.TAKEN);
+            refreshCourses(CourseType.WANTED.getCourses(), CourseType.WANTED);
+        });
         return root;
     }
-    public void refreshCourses(List<String> courses, LinearLayout layout) {
+
+    public void refreshCourses(List<String> courses, CourseType type) {
+        LinearLayout layout = type.getLayout(binding);
         layout.removeAllViews();
         if (AccountManager.getInstance().isLoggedIn()) {
             for (String courseCode : courses) {
                 ConstraintLayout courseConstraintLayout = new ConstraintLayout(this.getContext());
+                courseConstraintLayout.setId(View.generateViewId());
                 courseConstraintLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                ConstraintSet constraintSet = new ConstraintSet();
-
-
-//              LinearLayout courseLinearLayout = new LinearLayout(this.getContext());
-//              courseLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
                 ToggleButton courseButton = new ToggleButton(this.getContext());
-
                 TextView courseName = new TextView(this.getContext());
+                courseName.setId(View.generateViewId());
                 courseName.setText(courseCode);
                 courseName.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                courseButton.setId(View.generateViewId());
                 courseButton.setTag(courseCode);
-                courseButton.setText(courseCode);
+                courseButton.setText("X");
                 courseButton.setTextOff(courseCode);
                 courseButton.setTextOn("Remove: " + courseCode);
 
                 courseButton.setOnClickListener(v -> {
                     if (courseButton.isChecked()) {
                         courseButton.setBackgroundColor(Color.RED);
-                        new DeletePopUpFragment().show(getChildFragmentManager(),"delete_course");
+                        new DeletePopUpFragment((String)courseButton.getTag(), type,
+                                () -> refreshCourses(type.getCourses(),type)).show(getChildFragmentManager(),"delete_course");
 
                     } else {
                         courseButton.setBackgroundColor(Color.LTGRAY);
                     }
                 });
+
+                courseConstraintLayout.addView(courseButton);
+                courseConstraintLayout.addView(courseName);
+
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(courseConstraintLayout);
+
                 constraintSet.connect(courseName.getId(), ConstraintSet.START, courseConstraintLayout.getId(),ConstraintSet.START);
                 constraintSet.connect(courseName.getId(), ConstraintSet.TOP, courseConstraintLayout.getId(),ConstraintSet.TOP);
 
-                constraintSet.connect(courseName.getId(), ConstraintSet.END,courseButton.getId(),ConstraintSet.END);
-
                 constraintSet.connect(courseButton.getId(), ConstraintSet.END, courseConstraintLayout.getId(),ConstraintSet.END);
                 constraintSet.connect(courseButton.getId(), ConstraintSet.TOP, courseConstraintLayout.getId(),ConstraintSet.TOP);
+
                 constraintSet.applyTo(courseConstraintLayout);
-                courseConstraintLayout.addView(courseButton);
-                courseConstraintLayout.addView(courseName);
                 layout.addView(courseConstraintLayout);
             }
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

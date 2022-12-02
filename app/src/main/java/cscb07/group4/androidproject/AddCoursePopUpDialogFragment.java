@@ -31,14 +31,15 @@ import cscb07.group4.androidproject.databinding.FragmentManageBinding;
 import cscb07.group4.androidproject.manager.AccountManager;
 import cscb07.group4.androidproject.manager.Course;
 import cscb07.group4.androidproject.manager.CourseManger;
+import cscb07.group4.androidproject.manager.StudentCourseManager;
 
 public class AddCoursePopUpDialogFragment extends DialogFragment {
 
     Runnable onExit;
-    List <String> courses;
-    public AddCoursePopUpDialogFragment(List<String> courses, Runnable onExit){
+    CourseType type;
+    public AddCoursePopUpDialogFragment(CourseType type, Runnable onExit){
         this.onExit = onExit;
-        this.courses= courses;
+        this.type = type;
     }
 
     private FragmentAddCourseBinding binding;
@@ -70,8 +71,8 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 if(AccountManager.getInstance().isLoggedIn())
                     for (String courseCode:selectedCourses) {
-                        if(!courses.contains(courseCode))
-                            courses.add(courseCode);
+                        if(!type.getCourses().contains(courseCode))
+                            type.addCourses(courseCode);
                     }
                 onExit.run();
                 dismiss();
@@ -93,7 +94,7 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
         for (Course course : CourseManger.getInstance().getCourses()) {
             if ((!course.getName().toLowerCase(Locale.ROOT).contains(searchQuery) &&
                     !course.getCode().toLowerCase(Locale.ROOT).contains(searchQuery)) ||
-                    courses.contains(course.getCode())){
+                    type.getCourses().contains(course.getCode())){
                 continue;
             }
 
@@ -121,7 +122,6 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
             binding.courseLinearLayout.addView(courseLinearLayout);
         }
     }
-
     public void onResume() {
         super.onResume();
 

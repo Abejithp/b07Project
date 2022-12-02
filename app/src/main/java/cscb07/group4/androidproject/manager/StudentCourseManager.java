@@ -72,7 +72,7 @@ public final class StudentCourseManager {
         if (!AccountManager.getInstance().isLoggedIn() || courses.contains(courseCode)) {
             return;
         }
-        StudentCourseManager.courses.getTakenCourses().add(courseCode);
+        courses.add(courseCode);
         FirebaseDatabase.getInstance().getReference().child("studentCourses")
                 .child(AccountManager.getInstance().getAccount().getIdToken())
                 .setValue(StudentCourseManager.courses);
@@ -100,7 +100,7 @@ public final class StudentCourseManager {
         if (!AccountManager.getInstance().isLoggedIn() || !courses.contains(courseCode)) {
             return;
         }
-        StudentCourseManager.courses.getTakenCourses().remove(courseCode);
+        courses.remove(courseCode);
         FirebaseDatabase.getInstance().getReference().child("studentCourses")
                 .child(AccountManager.getInstance().getAccount().getIdToken())
                 .setValue(StudentCourseManager.courses);
