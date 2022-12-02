@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import cscb07.group4.androidproject.databinding.FragmentAddCourseBinding;
 import cscb07.group4.androidproject.databinding.FragmentManageBinding;
+import cscb07.group4.androidproject.manager.AccountManager;
 
 public class ManageFragment extends Fragment {
     private FragmentManageBinding binding;

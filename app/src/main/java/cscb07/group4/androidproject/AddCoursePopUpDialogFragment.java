@@ -28,6 +28,9 @@ import java.util.Set;
 
 import cscb07.group4.androidproject.databinding.FragmentAddCourseBinding;
 import cscb07.group4.androidproject.databinding.FragmentManageBinding;
+import cscb07.group4.androidproject.manager.AccountManager;
+import cscb07.group4.androidproject.manager.Course;
+import cscb07.group4.androidproject.manager.CourseManger;
 
 public class AddCoursePopUpDialogFragment extends DialogFragment {
 
