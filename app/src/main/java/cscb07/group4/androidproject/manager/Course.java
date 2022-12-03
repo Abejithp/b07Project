@@ -52,6 +52,17 @@ public class Course {
         this.sessions = sessions;
     }
 
+    public int checkSession(Session session){
+        if(session== Session.FALL){
+            return 0;
+        }
+        if(session==Session.WINTER){
+            return 1;
+        }
+        return 2;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

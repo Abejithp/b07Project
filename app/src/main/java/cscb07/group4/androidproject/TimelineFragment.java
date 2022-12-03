@@ -1,12 +1,15 @@
 package cscb07.group4.androidproject;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,60 +50,40 @@ public class TimelineFragment extends Fragment {
         return binding.getRoot();
     }
     public void update(){
-        if(AccountManager.getInstance().isLoggedIn()) {
-            List<String> courses = StudentCourseManager.getInstance().getWantedCourses();
-            for (String courseCode : courses) {
-                if (CourseManger.getInstance().getCourseByID(courseCode)!=null) {
-                    Course currentCourse = CourseManger.getInstance().getCourseByID(courseCode);
-                    TimelineFragment.add(currentCourse);
+
+        if(StudentCourseManager.getInstance().getWantedCourses()!=null) {
+            generateTimeline();
+            for (Integer session : timeline.keySet()) {
+
+                LinearLayout linearLayout = new LinearLayout(this.getContext());
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                linearLayout.setLayoutParams(new ViewGroup.LayoutParams(1160, ViewGroup.LayoutParams.MATCH_PARENT));
+
+
+
+                TextView textView = new TextView(this.getContext());
+
+                int year = 2022 + (int) Math.ceil(session / 3.0);
+
+                textView.setText(Session.values()[session % 3].getName() + " " + year);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    textView.setTextAppearance(R.style.SessionTheme);
                 }
+                linearLayout.addView(textView);
+                if (timeline.get(session) != null && !timeline.get(session).isEmpty()) {
+                    for (Course course : timeline.get(session)) {
+                        TextView courseText = new TextView(this.getContext());
+                        courseText.setText(course.getName());
+                        linearLayout.addView(courseText);
+                    }
+                }
+
+                binding.parentSession.addView(linearLayout);
+
             }
         }
     }
 
-    public static void add(Course course){
-
-        if(course!=null&&course.getPrerequisites()==null){
-            TextView textView = new TextView(binding.Sessions.getContext());
-            textView.setText(course.getName());
-            TimelineFragment.addSession(course,textView);
-        }
-
-        if(course!=null&&course.getPrerequisites() != null){
-            for(String prerequisite: course.getPrerequisites()){
-                if(StudentCourseManager.getInstance().getTakenCourses().contains(prerequisite)){
-                    continue;
-                }
-
-                Course current = CourseManger.getInstance().getCourseByID(prerequisite);
-                TimelineFragment.add(current);
-
-            }
-
-            TextView textView = new TextView(binding.Sessions.getContext());
-            textView.setText(course.getName());
-            TimelineFragment.addSession(course,textView);
-
-            return;
-        }
-
-    }
-
-    public static void addSession(Course course, TextView textView){
-        Session session = course.getSessions().get(0);
-
-        if(session == Session.WINTER){
-            binding.sessionWinter2023.addView(textView);
-        }
-        if(session.compareTo(Session.FALL)==0){
-            binding.sessionFall2022.addView(textView);
-        }
-        if(session.compareTo(Session.SUMMER)==0){
-            binding.sessionSummer2023.addView(textView);
-        }
-
-        return;
-    }
 
 
     @Override
@@ -110,6 +93,7 @@ public class TimelineFragment extends Fragment {
     }
 
     private void generateTimeline() {
+        timeline.clear();
         timeline.put(0, new HashSet<>()); // Fall 2022
         for (String courseCode : StudentCourseManager.getInstance().getWantedCourses()) {
             Course course = CourseManger.getInstance().getCourseByID(courseCode);
@@ -120,7 +104,13 @@ public class TimelineFragment extends Fragment {
     }
 
     private int addTimelineCourse(Course course) {
-        if (course.getSessions().isEmpty()) {
+
+
+        if (course.getSessions()==null || course.getSessions().isEmpty()) {
+            return -1;
+        }
+
+        if(StudentCourseManager.getInstance().getTakenCourses().contains(course.getCode())){
             return -1;
         }
 
@@ -128,10 +118,9 @@ public class TimelineFragment extends Fragment {
         if (course.getPrerequisites() != null) {
             for (String prereqCourseCode : course.getPrerequisites()) {
                 // Must add prerequisite course first if it hasn't been taken
-                if (!StudentCourseManager.getInstance().getTakenCourses().contains(prereqCourseCode)) {
                     Course prereqCourse = CourseManger.getInstance().getCourseByID(prereqCourseCode);
                     session = Math.max(session, addTimelineCourse(prereqCourse));
-                }
+
             }
             // Add the course after all of its prerequisite courses
             session = getNextSession(session);
