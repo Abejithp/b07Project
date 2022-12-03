@@ -17,12 +17,14 @@ public enum CourseType{
     public void addCourses(String courseCode){
         if(this==TAKEN){
             StudentCourseManager.getInstance().addTakenCourse(courseCode);
+            return;
         }
         StudentCourseManager.getInstance().addWantedCourse(courseCode);
     }
     public void deleteCourses(String courseCode){
         if(this==TAKEN){
             StudentCourseManager.getInstance().removeTakenCourse(courseCode);
+            return;
         }
         StudentCourseManager.getInstance().removeWantedCourse(courseCode);
     }

@@ -48,6 +48,13 @@ public class DeletePopUpFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        binding.buttonNo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         return dialog;
     }
 
