@@ -94,7 +94,8 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
         for (Course course : CourseManger.getInstance().getCourses()) {
             if ((!course.getName().toLowerCase(Locale.ROOT).contains(searchQuery) &&
                     !course.getCode().toLowerCase(Locale.ROOT).contains(searchQuery)) ||
-                    type.getCourses().contains(course.getId())){
+                    CourseType.TAKEN.getCourses().contains(course.getId()) ||
+                    CourseType.WANTED.getCourses().contains(course.getId())){
                 continue;
             }
 
@@ -117,7 +118,6 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
                     selectedCourses.remove(((String) v.getTag()));
                 }
             });
-
             courseLinearLayout.addView(courseButton);
             binding.courseLinearLayout.addView(courseLinearLayout);
         }

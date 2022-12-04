@@ -37,18 +37,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.467"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/wantedCourseScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/wantedCourseScrollView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ScrollView
         android:id="@+id/takenCourseScrollView"
-        android:layout_width="330dp"
-        android:layout_height="272dp"
+        android:layout_width="331dp"
+        android:layout_height="283dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintVertical_bias="0.484">
+        app:layout_constraintVertical_bias="0.363">
 
         <LinearLayout
             android:id="@+id/takenCourseLinearLayout"
@@ -102,10 +103,10 @@
         android:text="Add Course"
         app:layout_constraintBottom_toTopOf="@+id/wantedCourseScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.467"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.375" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

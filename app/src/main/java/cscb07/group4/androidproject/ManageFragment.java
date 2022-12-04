@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -75,30 +76,29 @@ public class ManageFragment extends Fragment {
                 if (course == null) {
                     continue;
                 }
-                String courseCode = course.getCode();
+                String courseCode = course.getId();
 
                 ConstraintLayout courseConstraintLayout = new ConstraintLayout(this.getContext());
                 courseConstraintLayout.setId(View.generateViewId());
                 courseConstraintLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
-                ToggleButton courseButton = new ToggleButton(this.getContext());
+                ImageButton courseButton = new ImageButton(this.getContext());
                 TextView courseName = new TextView(this.getContext());
+
                 courseName.setId(View.generateViewId());
-                courseName.setText(courseCode);
+                courseName.setText(courseCode+" | "+ CourseManger.getInstance().getCourseByID(courseCode).getName());
                 courseName.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+                courseName.setTextSize(18);
+                courseName.setTextColor(Color.BLACK);
+
                 courseButton.setId(View.generateViewId());
                 courseButton.setTag(courseID);
-                courseButton.setText("X");
-                courseButton.setTextOff(courseCode);
-                courseButton.setTextOn("Remove: " + courseCode);
+                courseButton.setImageResource(R.drawable.delete_icon);
 
                 courseButton.setOnClickListener(v -> {
-                    if (courseButton.isChecked()) {
-                        courseButton.setBackgroundColor(Color.RED);
+                    if (courseButton.isPressed()) {
                         new DeletePopUpFragment((String)courseButton.getTag(), type,
                                 () -> refreshCourses(type.getCourses(),type)).show(getChildFragmentManager(),"delete_course");
 
-                    } else {
-                        courseButton.setBackgroundColor(Color.LTGRAY);
                     }
                 });
 
@@ -110,6 +110,7 @@ public class ManageFragment extends Fragment {
 
                 constraintSet.connect(courseName.getId(), ConstraintSet.START, courseConstraintLayout.getId(),ConstraintSet.START);
                 constraintSet.connect(courseName.getId(), ConstraintSet.TOP, courseConstraintLayout.getId(),ConstraintSet.TOP);
+                constraintSet.connect(courseName.getId(), ConstraintSet.BOTTOM, courseConstraintLayout.getId(),ConstraintSet.BOTTOM);
 
                 constraintSet.connect(courseButton.getId(), ConstraintSet.END, courseConstraintLayout.getId(),ConstraintSet.END);
                 constraintSet.connect(courseButton.getId(), ConstraintSet.TOP, courseConstraintLayout.getId(),ConstraintSet.TOP);

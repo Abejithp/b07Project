@@ -2,12 +2,14 @@ package cscb07.group4.androidproject;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +36,11 @@ public class DeletePopUpFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_delete_course, null);
         binding = FragmentDeleteCourseBinding.bind(view);
         AlertDialog dialog = new AlertDialog.Builder(requireContext()).setView(view).create();
-        binding.buttonYes.setOnClickListener(new View.OnClickListener(){
+        TextView textView = binding.courseCodeTextView;
+        textView.setText("Delete " + deleteCourseCode);
+        textView.setTextSize(24);
+        textView.setTextColor(Color.BLACK);
+        binding.buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 type.deleteCourses(deleteCourseID);
