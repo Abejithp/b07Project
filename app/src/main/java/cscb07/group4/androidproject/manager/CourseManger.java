@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public final class CourseManger {
 
@@ -38,14 +39,11 @@ public final class CourseManger {
         data.child("courses").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (DataSnapshot courseData : task.getResult().getChildren()) {
-                    String courseCode = courseData.getKey();
+                    String courseID = courseData.getKey();
                     Course course = courseData.getValue(Course.class);
-                    // Repair course code if it doesn't match the inside object
-                    if (course != null && !courseCode.equals(course.getCode())) {
-                        course.setCode(courseCode);
-                        addCourse(course);
-                    } else {
-                        this.courses.put(courseCode, course);
+                    if (course != null && course.getName() != null) {
+                        course.setId(courseID);
+                        this.courses.put(courseID, course);
                     }
                 }
             }
@@ -61,13 +59,13 @@ public final class CourseManger {
      * @param course The course you want to add.
      */
     public void addCourse(Course course) {
-        if (course == null || courses.containsKey(course.getCode())) {
+        if (course == null || courses.containsKey(course.getId())) {
             return;
         }
 
-        this.courses.put(course.getCode(), course);
+        this.courses.put(course.getId(), course);
         FirebaseDatabase.getInstance().getReference().child("courses")
-                .child(course.getCode()).setValue(course);
+                .child(course.getId()).setValue(course);
     }
 
     /**
@@ -80,26 +78,35 @@ public final class CourseManger {
             return;
         }
 
-        removeCourse(course.getCode());
+        removeCourse(course.getId());
     }
 
     /**
      * Remove an available course from both the local list and remote firebase.
      *
-     * @param courseCode The code of the course you want to remove.
+     * @param courseID The code of the course you want to remove.
      */
-    public void removeCourse(String courseCode) {
-        if (courseCode == null || !courses.containsKey(courseCode)) {
+    public void removeCourse(String courseID) {
+        if (courseID == null || !courses.containsKey(courseID)) {
             return;
         }
 
-        this.courses.remove(courseCode);
+        this.courses.remove(courseID);
         FirebaseDatabase.getInstance().getReference().child("courses")
-                .child(courseCode).setValue(null);
+                .child(courseID).setValue(null);
     }
 
-    public Course getCourseByID(String courseCode) {
-        return this.courses.get(courseCode);
+    public Course getCourseByID(String courseID) {
+        return this.courses.get(courseID);
+    }
+
+    public Course getCourseByCourseCode(String courseCode) {
+        for (Course course : this.courses.values()) {
+            if (courseCode.equals(course.getCode())) {
+                return course;
+            }
+        }
+        return null;
     }
 
     /**

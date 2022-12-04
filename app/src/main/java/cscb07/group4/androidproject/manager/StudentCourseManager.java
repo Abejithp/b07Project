@@ -53,26 +53,26 @@ public final class StudentCourseManager {
     /**
      * Add a course the user is planning to take to both the local list and remote firebase.
      *
-     * @param courseCode The code of the course you want to add.
+     * @param courseID The code of the course you want to add.
      */
-    public void addWantedCourse(String courseCode) {
-        addCourse(courses.getWantedCourses(), courseCode);
+    public void addWantedCourse(String courseID) {
+        addCourse(courses.getWantedCourses(), courseID);
     }
 
     /**
      * Add a course the user has taken in the past to both the local list and remote firebase.
      *
-     * @param courseCode The code of the course you want to add.
+     * @param courseID The code of the course you want to add.
      */
-    public void addTakenCourse(String courseCode) {
-        addCourse(courses.getTakenCourses(), courseCode);
+    public void addTakenCourse(String courseID) {
+        addCourse(courses.getTakenCourses(), courseID);
     }
 
-    private void addCourse(List<String> courses, String courseCode) {
-        if (!AccountManager.getInstance().isLoggedIn() || courses.contains(courseCode)) {
+    private void addCourse(List<String> courses, String courseID) {
+        if (!AccountManager.getInstance().isLoggedIn() || courses.contains(courseID)) {
             return;
         }
-        courses.add(courseCode);
+        courses.add(courseID);
         FirebaseDatabase.getInstance().getReference().child("studentCourses")
                 .child(AccountManager.getInstance().getAccount().getIdToken())
                 .setValue(StudentCourseManager.courses);
@@ -81,26 +81,26 @@ public final class StudentCourseManager {
     /**
      * Remove a course the user is planning to take from both the local list and remote firebase.
      *
-     * @param courseCode The code of the course you want to remove.
+     * @param courseID The code of the course you want to remove.
      */
-    public void removeWantedCourse(String courseCode) {
-        removeCourse(courses.getWantedCourses(), courseCode);
+    public void removeWantedCourse(String courseID) {
+        removeCourse(courses.getWantedCourses(), courseID);
     }
 
     /**
      * Remove a course the user has taken in the past from both the local list and remote firebase.
      *
-     * @param courseCode The code of the course you want to remove.
+     * @param courseID The code of the course you want to remove.
      */
-    public void removeTakenCourse(String courseCode) {
-        removeCourse(courses.getTakenCourses(), courseCode);
+    public void removeTakenCourse(String courseID) {
+        removeCourse(courses.getTakenCourses(), courseID);
     }
 
-    private void removeCourse(List<String> courses, String courseCode) {
-        if (!AccountManager.getInstance().isLoggedIn() || !courses.contains(courseCode)) {
+    private void removeCourse(List<String> courses, String courseID) {
+        if (!AccountManager.getInstance().isLoggedIn() || !courses.contains(courseID)) {
             return;
         }
-        courses.remove(courseCode);
+        courses.remove(courseID);
         FirebaseDatabase.getInstance().getReference().child("studentCourses")
                 .child(AccountManager.getInstance().getAccount().getIdToken())
                 .setValue(StudentCourseManager.courses);

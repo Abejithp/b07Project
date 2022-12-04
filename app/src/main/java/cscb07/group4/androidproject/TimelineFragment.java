@@ -95,8 +95,8 @@ public class TimelineFragment extends Fragment {
     private void generateTimeline() {
         timeline.clear();
         timeline.put(0, new HashSet<>()); // Fall 2022
-        for (String courseCode : StudentCourseManager.getInstance().getWantedCourses()) {
-            Course course = CourseManger.getInstance().getCourseByID(courseCode);
+        for (String courseID : StudentCourseManager.getInstance().getWantedCourses()) {
+            Course course = CourseManger.getInstance().getCourseByID(courseID);
             if (course != null) {
                 addTimelineCourse(course);
             }
@@ -104,21 +104,19 @@ public class TimelineFragment extends Fragment {
     }
 
     private int addTimelineCourse(Course course) {
-
-
         if (course.getSessions()==null || course.getSessions().isEmpty()) {
             return -1;
         }
 
-        if(StudentCourseManager.getInstance().getTakenCourses().contains(course.getCode())){
+        if (StudentCourseManager.getInstance().getTakenCourses().contains(course.getId())){
             return -1;
         }
 
         int session = -1;
-        if (course.getPrerequisites() != null) {
-            for (String prereqCourseCode : course.getPrerequisites()) {
+        if (course.getPrerequisites() != null && !course.getPrerequisites().isEmpty()) {
+            for (String prereqID : course.getPrerequisites()) {
                 // Must add prerequisite course first if it hasn't been taken
-                    Course prereqCourse = CourseManger.getInstance().getCourseByID(prereqCourseCode);
+                    Course prereqCourse = CourseManger.getInstance().getCourseByID(prereqID);
                     session = Math.max(session, addTimelineCourse(prereqCourse));
 
             }

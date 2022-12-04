@@ -70,9 +70,9 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if(AccountManager.getInstance().isLoggedIn())
-                    for (String courseCode:selectedCourses) {
-                        if(!type.getCourses().contains(courseCode))
-                            type.addCourses(courseCode);
+                    for (String courseID:selectedCourses) {
+                        if(!type.getCourses().contains(courseID))
+                            type.addCourses(courseID);
                     }
                 onExit.run();
                 dismiss();
@@ -94,7 +94,7 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
         for (Course course : CourseManger.getInstance().getCourses()) {
             if ((!course.getName().toLowerCase(Locale.ROOT).contains(searchQuery) &&
                     !course.getCode().toLowerCase(Locale.ROOT).contains(searchQuery)) ||
-                    type.getCourses().contains(course.getCode())){
+                    type.getCourses().contains(course.getId())){
                 continue;
             }
 
@@ -102,7 +102,7 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
             courseLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
             ToggleButton courseButton = new ToggleButton(this.getContext());
-            courseButton.setTag(course.getCode());
+            courseButton.setTag(course.getId());
             courseButton.setText(course.getName() + " | " + course.getCode());
             courseButton.setTextOff(course.getName() + " | " + course.getCode());
             courseButton.setTextOn(course.getName() + " | " + course.getCode());

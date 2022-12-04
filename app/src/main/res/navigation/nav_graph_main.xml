@@ -14,20 +14,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_add_course"
-        android:name="cscb07.group4.androidproject.AddCoursePopUp"
-        android:label="@string/fragment_add_course"
-        tools:layout="@layout/fragment_add_course">
-
-    </fragment>
-
-
-
-
-    <fragment
         android:id="@+id/fragment_edit_courses"
         android:name="cscb07.group4.androidproject.ManageFragment"
-        android:label="Edit Courses (Student)"
+        android:label="Edit Courses"
         tools:layout="@layout/fragment_manage">
     </fragment>
 

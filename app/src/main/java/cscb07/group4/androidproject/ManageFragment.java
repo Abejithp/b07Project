@@ -20,6 +20,8 @@ import java.util.Locale;
 import cscb07.group4.androidproject.databinding.FragmentAddCourseBinding;
 import cscb07.group4.androidproject.databinding.FragmentManageBinding;
 import cscb07.group4.androidproject.manager.AccountManager;
+import cscb07.group4.androidproject.manager.Course;
+import cscb07.group4.androidproject.manager.CourseManger;
 import cscb07.group4.androidproject.manager.StudentCourseManager;
 
 public class ManageFragment extends Fragment {
@@ -68,7 +70,13 @@ public class ManageFragment extends Fragment {
         LinearLayout layout = type.getLayout(binding);
         layout.removeAllViews();
         if (AccountManager.getInstance().isLoggedIn()) {
-            for (String courseCode : courses) {
+            for (String courseID : courses) {
+                Course course = CourseManger.getInstance().getCourseByID(courseID);
+                if (course == null) {
+                    continue;
+                }
+                String courseCode = course.getCode();
+
                 ConstraintLayout courseConstraintLayout = new ConstraintLayout(this.getContext());
                 courseConstraintLayout.setId(View.generateViewId());
                 courseConstraintLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
@@ -78,7 +86,7 @@ public class ManageFragment extends Fragment {
                 courseName.setText(courseCode);
                 courseName.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
                 courseButton.setId(View.generateViewId());
-                courseButton.setTag(courseCode);
+                courseButton.setTag(courseID);
                 courseButton.setText("X");
                 courseButton.setTextOff(courseCode);
                 courseButton.setTextOn("Remove: " + courseCode);

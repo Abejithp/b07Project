@@ -14,11 +14,13 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowAnimationStyle">@style/EndgameDialog</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="CustomDialog" parent="@android:style/Theme.Holo.Light" >
-        <item name="android:windowBackground">@null</item>
-        <item name="android:windowIsFloating">true</item>
+    <style name="EndgameDialog" parent="Theme.AndroidProject">
+        <item name="android:windowBackground">#BF000000</item>
+        <item name="windowMinWidthMajor">0dp</item>
+        <item name="windowMinWidthMinor">0dp</item>
     </style>
     
     <style name="SessionTheme" parent="@android:style/Theme.Holo.Light">

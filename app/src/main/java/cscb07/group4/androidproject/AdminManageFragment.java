@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import cscb07.group4.androidproject.databinding.FragmentAdminCourseBinding;
 import cscb07.group4.androidproject.manager.Course;
+import cscb07.group4.androidproject.manager.CourseManger;
 
 public class AdminManageFragment extends Fragment {
 
@@ -55,6 +56,17 @@ public class AdminManageFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("ManageFragment", String.valueOf(error.toException()));
+            }
+        });
+
+        binding.addCourseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AddAdminCourseDialogFragment(() -> {
+                    courseList.clear();
+                    courseList.addAll(CourseManger.getInstance().getCourses());
+                    AdminManageFragment.this.adapter.notifyDataSetChanged();
+                }).show(getChildFragmentManager(),"dialog_add_admin_course");
             }
         });
 

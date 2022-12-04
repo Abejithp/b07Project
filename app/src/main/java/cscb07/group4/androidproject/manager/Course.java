@@ -1,23 +1,23 @@
 package cscb07.group4.androidproject.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Course {
 
+    private String id;
     private String name;
     private String code;
-    private List<String> prerequisites;
-    private List<Session> sessions;
+    private List<String> prerequisites = new ArrayList<>();
+    private List<Session> sessions = new ArrayList<>();
 
-    // For Firebase
-    public Course() {}
+    public String getId() {
+        return id;
+    }
 
-    public Course(String name, String code, List<String> prerequisites, List<Session> sessions){
-        this.name = name;
-        this.code = code;
-        this.prerequisites = prerequisites;
-        this.sessions = sessions;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -52,27 +52,16 @@ public class Course {
         this.sessions = sessions;
     }
 
-    public int checkSession(Session session){
-        if(session== Session.FALL){
-            return 0;
-        }
-        if(session==Session.WINTER){
-            return 1;
-        }
-        return 2;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return code.equals(course.code);
+        return id.equals(course.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code);
+        return Objects.hash(id);
     }
 }

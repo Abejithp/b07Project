@@ -12,23 +12,17 @@ import android.view.Window;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import cscb07.group4.androidproject.databinding.FragmentDeleteCourseBinding;
-import cscb07.group4.androidproject.manager.StudentCourseManager;
 
 public class DeletePopUpFragment extends DialogFragment {
 
-    String deleteCourseCode;
+    String deleteCourseID;
     CourseType type;
     Runnable onExit;
 
-    public DeletePopUpFragment(String deleteCourseCode, CourseType type, Runnable onExit){
-        this.deleteCourseCode = deleteCourseCode;
+    public DeletePopUpFragment(String deleteCourseID, CourseType type, Runnable onExit){
+        this.deleteCourseID = deleteCourseID;
         this.type = type;
         this.onExit = onExit;
     }
@@ -43,7 +37,7 @@ public class DeletePopUpFragment extends DialogFragment {
         binding.buttonYes.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                type.deleteCourses(deleteCourseCode);
+                type.deleteCourses(deleteCourseID);
                 onExit.run();
                 dismiss();
             }
