@@ -3,6 +3,7 @@ package cscb07.group4.androidproject;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -75,6 +77,18 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
         holder.course_pre.setText("Prerequisites: " + pre);
         holder.course_session.setText("Seasonal Offerings: " + season);
 
+        if(position % 4 == 0){
+            holder.itemView.setBackgroundColor(Color.parseColor("#BAE7AF"));
+        }
+        else if(position % 4 == 1){
+            holder.itemView.setBackgroundColor(Color.parseColor("#DFD4E4"));
+        }
+        else if(position % 4 == 2){
+            holder.itemView.setBackgroundColor(Color.parseColor("#AEE4FF"));
+        }
+        else if(position % 4 == 3){
+            holder.itemView.setBackgroundColor(Color.parseColor("#FCFFB0"));
+        }
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

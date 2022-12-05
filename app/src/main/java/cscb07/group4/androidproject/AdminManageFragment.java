@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +30,6 @@ public class AdminManageFragment extends Fragment {
     private FragmentAdminCourseBinding binding;
 
     private RecyclerView.Adapter<AdminAdapter.AdminViewHolder> adapter;
-    private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Course> courseList = new ArrayList<>();
     private FirebaseAuth firebaseAuth;
 
@@ -70,7 +70,7 @@ public class AdminManageFragment extends Fragment {
             }
         });
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AdminAdapter(courseList);
         recyclerView.setAdapter(adapter);
