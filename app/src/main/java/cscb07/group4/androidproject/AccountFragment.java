@@ -27,27 +27,9 @@ public class AccountFragment extends Fragment {
         binding.logoutButton.setOnClickListener(v -> {
             AccountManager.getInstance().logout();
             AccountFragment.this.update();
+            NavHostFragment.findNavController(AccountFragment.this)
+                    .navigate(R.id.action_AccountFragment_to_WelcomeFragment);
         });
-
-        binding.becomeAdminButton.setOnClickListener(v -> {
-            AccountManager.getInstance().becomeAdmin();
-            AccountFragment.this.update();
-        });
-
-        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                NavHostFragment.findNavController(AccountFragment.this)
-                        .navigate(R.id.action_AccountFragment_to_RegisterFragment);
-            }
-        });
-
-        binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                NavHostFragment.findNavController(AccountFragment.this)
-                        .navigate(R.id.action_AccountFragment_to_LoginFragment);
-            }
-        });
-
 
         return root;
     }
@@ -58,8 +40,6 @@ public class AccountFragment extends Fragment {
             binding.nameView.setText(auth.getAccount().getName());
             binding.emailView.setText(auth.getAccount().getEmail());
             binding.accountTypeView.setText(getString(R.string.account_type, auth.getAccount().getType().toString()));
-            binding.passwordView.setText(getString(R.string.password, auth.getAccount().getPwd()));
-            binding.tokenView.setText(getString(R.string.token, auth.getAccount().getIdToken()));
 
             binding.logoutButton.setVisibility(View.VISIBLE);
 
@@ -67,8 +47,6 @@ public class AccountFragment extends Fragment {
             binding.nameView.setText(getString(R.string.not_logged_in));
             binding.emailView.setText(getString(R.string.na));
             binding.accountTypeView.setText(getString(R.string.account_type, getString(R.string.na)));
-            binding.passwordView.setText(getString(R.string.password, getString(R.string.na)));
-            binding.tokenView.setText(getString(R.string.token, getString(R.string.na)));
 
             binding.logoutButton.setVisibility(View.INVISIBLE);
         }

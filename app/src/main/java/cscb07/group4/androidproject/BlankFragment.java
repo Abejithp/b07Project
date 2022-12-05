@@ -1,10 +1,10 @@
 package cscb07.group4.androidproject;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,8 +66,8 @@ public class BlankFragment extends Fragment {
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, LoginFragment.class);
-                startActivity(intent);
+                NavHostFragment.findNavController(BlankFragment.this)
+                        .navigate(R.id.action_WelcomeFragment_to_RegisterFragment);
 
             }
         });
@@ -75,8 +75,8 @@ public class BlankFragment extends Fragment {
         logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, LoginFragment.class);
-                startActivity(intent);
+                NavHostFragment.findNavController(BlankFragment.this)
+                        .navigate(R.id.action_WelcomeFragment_to_LoginFragment);
             }
         });
     }

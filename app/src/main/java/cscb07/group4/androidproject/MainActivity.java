@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -26,19 +25,20 @@ public class MainActivity extends AppCompatActivity implements AccountChangeList
         setContentView(binding.getRoot());
 
         // Setup bottom navbar
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavController navController = ((NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_main)).getNavController();
         this.updateNavbar();
         navController.addOnDestinationChangedListener((navController1, destination, bundle) -> {
-            if (destination.getId() == R.id.fragment_login || destination.getId() == R.id.fragment_register) {
+            if (destination.getId() == R.id.fragment_welcome || destination.getId() == R.id.fragment_login
+                    || destination.getId() == R.id.fragment_register) {
                 binding.bottomNavView.setVisibility(View.GONE);
             } else {
                 binding.bottomNavView.setVisibility(View.VISIBLE);
             }
         });
 
-
         // These are the menus without the back button (top action bar)
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.fragment_welcome,
                 R.id.fragment_timeline, R.id.fragment_edit_courses, R.id.fragment_admin_manage, R.id.nav_account)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -61,14 +61,15 @@ public class MainActivity extends AppCompatActivity implements AccountChangeList
         } else {
             binding.bottomNavView.inflateMenu(R.menu.bottom_nav_menu);
         }
-        NavHostFragment navController = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupWithNavController(binding.bottomNavView, navController.getNavController());
+        NavController navController = ((NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_main)).getNavController();
+        NavigationUI.setupWithNavController(binding.bottomNavView, navController);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavController navController = ((NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_main)).getNavController();
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
 }

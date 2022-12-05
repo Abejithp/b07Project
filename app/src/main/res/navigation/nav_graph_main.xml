@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/fragment_edit_courses">
+    app:startDestination="@id/fragment_welcome">
 
     <fragment
         android:id="@+id/fragment_timeline"
@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_AccountFragment_to_RegisterFragment"
             app:destination="@id/fragment_register" />
+        <action
+            android:id="@+id/action_AccountFragment_to_WelcomeFragment"
+            app:destination="@id/fragment_welcome" />
     </fragment>
 
 
@@ -69,5 +72,22 @@
         <action
             android:id="@+id/action_RegisterFragment_to_LoginFragment"
             app:destination="@id/fragment_login" />
+        <action
+            android:id="@+id/action_RegisterFragment_to_EditCourseFragment"
+            app:destination="@id/fragment_edit_courses" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_welcome"
+        android:name="cscb07.group4.androidproject.BlankFragment"
+        android:label="Welcome"
+        tools:layout="@layout/fragment_blank">
+
+        <action
+            android:id="@+id/action_WelcomeFragment_to_LoginFragment"
+            app:destination="@id/fragment_login" />
+        <action
+            android:id="@+id/action_WelcomeFragment_to_RegisterFragment"
+            app:destination="@id/fragment_register" />
     </fragment>
 </navigation>

@@ -103,7 +103,7 @@ public final class AccountManager {
     @Deprecated
     public void becomeAdmin() {
         Account account = new Account();
-        account.setName("AmongUs Faded");
+        account.setName("Among Us Faded");
         account.setIdToken("XX_69_AMONGUS_420_XXFADED");
         account.setType(AccountType.ADMIN);
         account.setEmail("email@gmail.com");
