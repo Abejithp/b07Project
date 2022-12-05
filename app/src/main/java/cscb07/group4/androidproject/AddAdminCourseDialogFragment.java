@@ -16,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.UUID;
 
 import cscb07.group4.androidproject.databinding.DialogAddCourseAdminBinding;
@@ -29,6 +32,9 @@ public class AddAdminCourseDialogFragment extends DialogFragment {
 
     private Course course;
     private Runnable onExit;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReference("courses");
 
     public AddAdminCourseDialogFragment(Course course, Runnable onExit){
         this(onExit);

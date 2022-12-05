@@ -1,10 +1,12 @@
 package cscb07.group4.androidproject;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 import cscb07.group4.androidproject.manager.Course;
 import cscb07.group4.androidproject.manager.Session;
+import cscb07.group4.androidproject.manager.CourseManger;
 
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHolder>{
 
@@ -33,14 +36,17 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdminViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdminViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String pre = "";
         String season = "";
         int count1 = 0;
         int count2 = 0;
+        CourseManger manager = CourseManger.getInstance();
 
         holder.course_code.setText("Course Code: " + courseList.get(position).getCode());
         holder.course_name.setText("Course Name: " + courseList.get(position).getName());
+
+        Course course = courseList.get(position);
 
         if(courseList.get(position).getPrerequisites()!=null) {
             for (String p : courseList.get(position).getPrerequisites()) {
@@ -53,7 +59,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
                 count1++;
             }
         }
-
 
         if(courseList.get(position).getSessions() != null) {
             for (Session s : courseList.get(position).getSessions()) {
@@ -69,6 +74,15 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
 
         holder.course_pre.setText("Prerequisites: " + pre);
         holder.course_session.setText("Seasonal Offerings: " + season);
+
+        holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CourseManger.getInstance().removeCourse(course);
+                AdminAdapter.this.courseList.remove(course);
+                AdminAdapter.this.notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override
@@ -81,6 +95,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
         TextView course_code;
         TextView course_pre;
         TextView course_session;
+        Button btn_delete;
 
         public AdminViewHolder(@NonNull View itemView){
             super(itemView);
@@ -88,6 +103,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
             this.course_code = itemView.findViewById(R.id.codeText);
             this.course_session = itemView.findViewById(R.id.sessionText);
             this.course_pre = itemView.findViewById(R.id.preText);
+            this.btn_delete = itemView.findViewById(R.id.btn_delete);
         }
     }
 }
