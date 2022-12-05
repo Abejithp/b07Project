@@ -1,5 +1,8 @@
 package cscb07.group4.androidproject;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,19 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StyleRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import cscb07.group4.androidproject.databinding.FragmentTimelineBinding;
-import cscb07.group4.androidproject.manager.AccountManager;
 import cscb07.group4.androidproject.manager.Course;
 import cscb07.group4.androidproject.manager.CourseManger;
 import cscb07.group4.androidproject.manager.Session;
@@ -49,6 +49,7 @@ public class TimelineFragment extends Fragment {
 
         return binding.getRoot();
     }
+    @SuppressLint("SetTextI18n")
     public void update(){
 
         if(StudentCourseManager.getInstance().getWantedCourses()!=null) {
@@ -57,7 +58,7 @@ public class TimelineFragment extends Fragment {
 
                 LinearLayout linearLayout = new LinearLayout(this.getContext());
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
-                linearLayout.setLayoutParams(new ViewGroup.LayoutParams(1160, ViewGroup.LayoutParams.MATCH_PARENT));
+                linearLayout.setLayoutParams(new ViewGroup.LayoutParams(1163, ViewGroup.LayoutParams.MATCH_PARENT));
 
 
 
@@ -71,10 +72,33 @@ public class TimelineFragment extends Fragment {
                 }
                 linearLayout.addView(textView);
                 if (timeline.get(session) != null && !timeline.get(session).isEmpty()) {
-                    for (Course course : timeline.get(session)) {
-                        TextView courseText = new TextView(this.getContext());
-                        courseText.setText(course.getName());
-                        linearLayout.addView(courseText);
+                    int theme = 0;
+                    for (Course course : timeline.get(session)){
+                        ConstraintLayout constraintLayout = new ConstraintLayout(this.getContext());
+                        constraintLayout.setLayoutParams(new ViewGroup.LayoutParams(1100,320));
+
+                        if(theme%2==0){
+                            constraintLayout.setBackgroundResource(R.color.colorPrimary);
+                            TextView courseText = new TextView(this.getContext());
+                            courseText.setText("Course Code: "+course.getCode()+"\n\n"+"Course Name: "
+                                    +course.getName()+"\n");
+                            courseText.setTextColor(Color.WHITE);
+                            courseText.setPaddingRelative(50,50,25,50);
+                            courseText.setClipBounds(new Rect());
+                            constraintLayout.addView(courseText);
+
+                        }
+                        else{
+                            TextView courseText = new TextView(this.getContext());
+                            courseText.setText("Course Code: "+course.getCode()+"\n\n"+"Course Name: "
+                                    +course.getName()+"\n");
+                            courseText.setTextColor(Color.BLACK);
+                            courseText.setPaddingRelative(50,50,25,50);
+                            constraintLayout.addView(courseText);
+
+                        }
+                        linearLayout.addView(constraintLayout);
+                        theme+=1;
                     }
                 }
 
