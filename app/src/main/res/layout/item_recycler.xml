@@ -1,4 +1,4 @@
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -38,6 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_row="0"
-        android:layout_column="5"
+        android:layout_column="3"
         android:text="Delete" />
-</GridLayout>
+</LinearLayout>
