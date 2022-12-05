@@ -91,6 +91,11 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
 
     public void refreshCourses() {
         binding.courseLinearLayout.removeAllViews();
+        TextView textView = new TextView(this.getContext());
+        textView.setText("Course Has Been Added Or Course Does Not Exist");
+        textView.setTextSize(24);
+        textView.setTextColor(Color.BLACK);
+        int count = 0;
         for (Course course : CourseManger.getInstance().getCourses()) {
             if ((!course.getName().toLowerCase(Locale.ROOT).contains(searchQuery) &&
                     !course.getCode().toLowerCase(Locale.ROOT).contains(searchQuery)) ||
@@ -98,7 +103,7 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
                     CourseType.WANTED.getCourses().contains(course.getId())){
                 continue;
             }
-
+            count++;
             LinearLayout courseLinearLayout = new LinearLayout(this.getContext());
             courseLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -112,14 +117,19 @@ public class AddCoursePopUpDialogFragment extends DialogFragment {
             courseButton.setOnClickListener(v -> {
                 if (courseButton.isChecked()) {
                     selectedCourses.add((String) v.getTag());
-                    courseButton.setBackgroundColor(Color.BLUE);
+                    courseButton.setBackgroundResource(R.color.colorPrimary);
+                    courseButton.setTextColor(Color.WHITE);
                 } else {
                     courseButton.setBackgroundColor(Color.LTGRAY);
+                    courseButton.setTextColor(Color.BLACK);
                     selectedCourses.remove(((String) v.getTag()));
                 }
             });
             courseLinearLayout.addView(courseButton);
             binding.courseLinearLayout.addView(courseLinearLayout);
+        }
+        if(count == 0){
+            binding.courseLinearLayout.addView(textView);
         }
     }
     public void onResume() {

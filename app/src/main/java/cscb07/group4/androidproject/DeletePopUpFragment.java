@@ -16,14 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import cscb07.group4.androidproject.databinding.FragmentDeleteCourseBinding;
+import cscb07.group4.androidproject.manager.Course;
+import cscb07.group4.androidproject.manager.CourseManger;
 
 public class DeletePopUpFragment extends DialogFragment {
 
-    String deleteCourseID;
+    Course deleteCourseID;
     CourseType type;
     Runnable onExit;
 
-    public DeletePopUpFragment(String deleteCourseID, CourseType type, Runnable onExit){
+    public DeletePopUpFragment(Course deleteCourseID, CourseType type, Runnable onExit){
         this.deleteCourseID = deleteCourseID;
         this.type = type;
         this.onExit = onExit;
@@ -37,13 +39,13 @@ public class DeletePopUpFragment extends DialogFragment {
         binding = FragmentDeleteCourseBinding.bind(view);
         AlertDialog dialog = new AlertDialog.Builder(requireContext()).setView(view).create();
         TextView textView = binding.courseCodeTextView;
-        textView.setText("Delete " + deleteCourseCode);
+        textView.setText("Delete " + deleteCourseID.getCode());
         textView.setTextSize(24);
         textView.setTextColor(Color.BLACK);
         binding.buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                type.deleteCourses(deleteCourseID);
+                type.deleteCourses(deleteCourseID.getId());
                 onExit.run();
                 dismiss();
             }

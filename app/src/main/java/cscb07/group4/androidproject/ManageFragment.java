@@ -76,7 +76,7 @@ public class ManageFragment extends Fragment {
                 if (course == null) {
                     continue;
                 }
-                String courseCode = course.getId();
+                String courseCode = course.getCode();
 
                 ConstraintLayout courseConstraintLayout = new ConstraintLayout(this.getContext());
                 courseConstraintLayout.setId(View.generateViewId());
@@ -85,7 +85,7 @@ public class ManageFragment extends Fragment {
                 TextView courseName = new TextView(this.getContext());
 
                 courseName.setId(View.generateViewId());
-                courseName.setText(courseCode+" | "+ CourseManger.getInstance().getCourseByID(courseCode).getName());
+                courseName.setText(courseCode+" | "+ course.getName());
                 courseName.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
                 courseName.setTextSize(18);
                 courseName.setTextColor(Color.BLACK);
@@ -96,7 +96,7 @@ public class ManageFragment extends Fragment {
 
                 courseButton.setOnClickListener(v -> {
                     if (courseButton.isPressed()) {
-                        new DeletePopUpFragment((String)courseButton.getTag(), type,
+                        new DeletePopUpFragment(course, type,
                                 () -> refreshCourses(type.getCourses(),type)).show(getChildFragmentManager(),"delete_course");
 
                     }
@@ -111,6 +111,8 @@ public class ManageFragment extends Fragment {
                 constraintSet.connect(courseName.getId(), ConstraintSet.START, courseConstraintLayout.getId(),ConstraintSet.START);
                 constraintSet.connect(courseName.getId(), ConstraintSet.TOP, courseConstraintLayout.getId(),ConstraintSet.TOP);
                 constraintSet.connect(courseName.getId(), ConstraintSet.BOTTOM, courseConstraintLayout.getId(),ConstraintSet.BOTTOM);
+                constraintSet.connect(courseName.getId(), ConstraintSet.END, courseButton.getId(),ConstraintSet.START);
+                constraintSet.setMargin(courseName.getId(), ConstraintSet.END, 112);
 
                 constraintSet.connect(courseButton.getId(), ConstraintSet.END, courseConstraintLayout.getId(),ConstraintSet.END);
                 constraintSet.connect(courseButton.getId(), ConstraintSet.TOP, courseConstraintLayout.getId(),ConstraintSet.TOP);
