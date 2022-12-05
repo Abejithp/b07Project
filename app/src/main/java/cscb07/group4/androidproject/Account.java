@@ -7,8 +7,7 @@ import cscb07.group4.androidproject.manager.AccountType;
 
 public class Account {
 
-    private String firstName = "First"; // TODO Add to registration.
-    private String lastName = "Last";
+    private String name = "First Last"; // TODO Add to registration.
     private String idToken;
     private String email;
     private String pwd;
@@ -18,21 +17,9 @@ public class Account {
 
     public Account() {}
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getName() {return name;}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public void setName(String name) {this.name = name;}
 
     public String getIdToken() {
         return idToken;

@@ -48,23 +48,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        binding.register2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), signup.class);
-                startActivity(intent);
-                getActivity().finish();
-
-            }
-        });
-
-        binding.signin2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), login.class);
-                startActivity(intent);
-                getActivity().finish();
-
-            }
-        });
 
         return root;
     }
@@ -72,7 +55,7 @@ public class AccountFragment extends Fragment {
     public void update() {
         AccountManager auth = AccountManager.getInstance();
         if (AccountManager.getInstance().isLoggedIn()) {
-            binding.nameView.setText(auth.getAccount().getFirstName() + " " + auth.getAccount().getLastName());
+            binding.nameView.setText(auth.getAccount().getName());
             binding.emailView.setText(auth.getAccount().getEmail());
             binding.accountTypeView.setText(getString(R.string.account_type, auth.getAccount().getType().toString()));
             binding.passwordView.setText(getString(R.string.password, auth.getAccount().getPwd()));

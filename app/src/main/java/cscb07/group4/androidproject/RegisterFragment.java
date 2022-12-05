@@ -30,7 +30,7 @@ public class RegisterFragment extends Fragment {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.btnSignIn.setOnClickListener(new View.OnClickListener(){
+        binding.loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(RegisterFragment.this)
@@ -38,50 +38,22 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        binding.btnAdminRegister.setOnClickListener(new View.OnClickListener(){
+        binding.registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                String email = binding.editTextTextEmailAddress.getText().toString();
-                String pwd = binding.editTextTextPassword.getText().toString();
-
+                String email = binding.emailField.getEditText().getText().toString();
+                String pwd = binding.passwordField.getEditText().getText().toString();
+                String name = binding.fullnameField.getEditText().getText().toString();
                 // FirebaseAuth cannot take empty email/password
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pwd)) {
                     return;
                 }
 
-                AccountManager.getInstance().register(email, pwd, AccountType.ADMIN, getActivity(), new OnCompleteListener<AuthResult>() {
+                AccountManager.getInstance().register(email, pwd, name, AccountType.STUDENT, getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getContext(), "Registered Successfully As Admin", Toast.LENGTH_SHORT).show();
-                        }else{
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(getContext(), "Register Failed (" + task.getException().getMessage() + ")", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getContext(), "Register Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-            }
-        });
-
-        binding.btnStudentRegister.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                String email = binding.editTextTextEmailAddress.getText().toString();
-                String pwd = binding.editTextTextPassword.getText().toString();
-
-                // FirebaseAuth cannot take empty email/password
-                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pwd)) {
-                    return;
-                }
-
-                AccountManager.getInstance().register(email, pwd, AccountType.STUDENT, getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getContext(), "Registered Successfully As Student", Toast.LENGTH_SHORT).show();
                         }else{
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 Toast.makeText(getContext(), "Register Failed (" + task.getException().getMessage() + ")", Toast.LENGTH_LONG).show();

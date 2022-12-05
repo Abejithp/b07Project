@@ -1,5 +1,6 @@
 package cscb07.group4.androidproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ public class LoginFragment extends Fragment {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.btnRegister.setOnClickListener(new View.OnClickListener(){
+        binding.signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(LoginFragment.this)
@@ -37,11 +38,11 @@ public class LoginFragment extends Fragment {
         });
 
 
-        binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = binding.editTextTextEmailAddress.getText().toString();
-                String pwd = binding.editTextTextPassword.getText().toString();
+                String email = binding.usernameTextFieldDesign.getEditText().getText().toString();
+                String pwd = binding.passwordTextFieldDesign.getEditText().getText().toString();
 
                 // FirebaseAuth cannot take empty email/password
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pwd)) {
@@ -52,16 +53,21 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            binding.editTextTextEmailAddress.setText(null);
-                            binding.editTextTextPassword.setText(null);
+                            binding.usernameTextFieldDesign.getEditText().setText(null);
+                            binding.passwordTextFieldDesign.getEditText().setText(null);
                             NavHostFragment.findNavController(LoginFragment.this)
                                     .navigate(R.id.action_LoginFragment_to_EditCourseFragment);
                             Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                         } else {
+                            binding.passwordTextFieldDesign.setError("Incorrect Login");
                             Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
+
+
+
             }
         });
 

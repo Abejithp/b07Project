@@ -26,9 +26,14 @@
     <style name="SessionTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">35dp</item>
-        <item name="android:color">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-        
-        
+    <style name="CourseTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:textColor">@color/purple_700</item>
+        <item name="android:width">200dp</item>
+        <item name="android:height">100dp</item>
+        <item name="android:background">@color/purple_200</item>
+
     </style>
 </resources>

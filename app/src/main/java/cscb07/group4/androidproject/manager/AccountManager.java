@@ -70,7 +70,7 @@ public final class AccountManager {
         });
     }
 
-    public void register(String email, String pwd, AccountType type, Activity activity, OnCompleteListener<AuthResult> onComplete) {
+    public void register(String email, String pwd, String name, AccountType type, Activity activity, OnCompleteListener<AuthResult> onComplete) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
@@ -85,6 +85,7 @@ public final class AccountManager {
                 account.setEmail(firebaseUser.getEmail());
                 account.setPwd(pwd);
                 account.setType(type);
+                account.setName(name);
 
                 AccountManager.this.setAccount(account);
 
@@ -102,8 +103,7 @@ public final class AccountManager {
     @Deprecated
     public void becomeAdmin() {
         Account account = new Account();
-        account.setFirstName("Amongus");
-        account.setLastName("Faded");
+        account.setName("AmongUs Faded");
         account.setIdToken("XX_69_AMONGUS_420_XXFADED");
         account.setType(AccountType.ADMIN);
         account.setEmail("email@gmail.com");

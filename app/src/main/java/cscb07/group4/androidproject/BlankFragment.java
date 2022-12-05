@@ -66,7 +66,7 @@ public class BlankFragment extends Fragment {
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, signup.class);
+                Intent intent = new Intent(context, LoginFragment.class);
                 startActivity(intent);
 
             }
@@ -75,7 +75,7 @@ public class BlankFragment extends Fragment {
         logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, login.class);
+                Intent intent = new Intent(context, LoginFragment.class);
                 startActivity(intent);
             }
         });
