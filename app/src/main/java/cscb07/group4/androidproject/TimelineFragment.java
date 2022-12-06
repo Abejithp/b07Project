@@ -58,9 +58,10 @@ public class TimelineFragment extends Fragment {
 
                 LinearLayout linearLayout = new LinearLayout(this.getContext());
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
-                linearLayout.setLayoutParams(new ViewGroup.LayoutParams(1163, ViewGroup.LayoutParams.MATCH_PARENT));
+                linearLayout.setLayoutParams(new ViewGroup.LayoutParams(1000, ViewGroup.LayoutParams.MATCH_PARENT));
 
-
+                View divider = new View(this.getContext());
+                divider.setLayoutParams(new ViewGroup.LayoutParams(15,0));
 
                 TextView textView = new TextView(this.getContext());
 
@@ -102,7 +103,7 @@ public class TimelineFragment extends Fragment {
                 }
 
                 binding.parentSession.addView(linearLayout);
-
+                binding.parentSession.addView(divider);
             }
         }
     }
