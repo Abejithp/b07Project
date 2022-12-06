@@ -79,9 +79,9 @@
 
     <fragment
         android:id="@+id/fragment_welcome"
-        android:name="cscb07.group4.androidproject.BlankFragment"
+        android:name="cscb07.group4.androidproject.WelcomeFragment"
         android:label="Welcome"
-        tools:layout="@layout/fragment_blank">
+        tools:layout="@layout/fragment_welcome">
 
         <action
             android:id="@+id/action_WelcomeFragment_to_LoginFragment"
