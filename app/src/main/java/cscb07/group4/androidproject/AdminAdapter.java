@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import cscb07.group4.androidproject.manager.Course;
 import cscb07.group4.androidproject.manager.Session;
 import cscb07.group4.androidproject.manager.CourseManger;
+import cscb07.group4.androidproject.manager.StudentCourseManager;
 
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHolder>{
 
@@ -94,12 +97,14 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CourseManger.getInstance().removeCourse(course);
-                AdminAdapter.this.courseList.remove(course);
-                AdminAdapter.this.notifyItemRemoved(position);
+                new AdminDeletePopUpFragment(course, new Runnable() {
+                    @Override
+                    public void run() {
+                        refresh(course, position);
+                    }
+                }).show(AdminAdapter.this.fragment.getChildFragmentManager(),"dialog_admin_delete_course");
             }
         });
-
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +115,10 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
             }
         });
     }
-
+    public void refresh(Course course, int position){
+        AdminAdapter.this.courseList.remove(course);
+        AdminAdapter.this.notifyItemRemoved(position);
+    }
     @Override
     public int getItemCount() {
         return (courseList != null ? courseList.size() : 0);
