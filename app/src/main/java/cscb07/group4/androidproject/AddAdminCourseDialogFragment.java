@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -98,14 +99,32 @@ public class AddAdminCourseDialogFragment extends DialogFragment {
                     binding.prerequisitesEditText.setText("");
                     refreshPrerequisites();
                 }
+                else if (course == null || course.getPrerequisites().contains(AddAdminCourseDialogFragment
+                        .this.course.getId())){
+                    if(course==null){
+                        binding.prerequisitesEditText.setError("Course does not exist");
+                        return;
+                    }
+                    binding.prerequisitesEditText.setError("Invalid Prerequisite");
+                    return;
+
+                }
             }
         });
 
         refreshPrerequisites();
 
         this.binding.addCourseButton2.setOnClickListener(v -> {
-            if (course.getId() == null || course.getId().isEmpty() ||
-                    course.getName() == null || course.getName().isEmpty()) {
+            if (course.getName() == null || course.getName().isEmpty()) {
+                binding.courseNameEditText.setError("Empty Field");
+                return;
+            }
+            else if(course.getCode() == null || course.getCode().isEmpty()){
+                binding.courseCodeEditText.setError("Empty Field");
+                return;
+            }
+            else if(course.getSessions().isEmpty()){
+                binding.sessionsText.setError("Empty Field");
                 return;
             }
 
