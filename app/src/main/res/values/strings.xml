@@ -24,4 +24,7 @@
     <string name="logout">LOGOUT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="click_to_register">Click To Register</string>
+    <string name="click_to_log_in">Click To Log In</string>
+    <string name="welcome_to_the_course_manager_application">Welcome to the course manager Application</string>
 </resources>
