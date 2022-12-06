@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,10 +23,11 @@ import cscb07.group4.androidproject.manager.CourseManger;
 
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHolder>{
 
-    public Context context;
+    public Fragment fragment;
     public ArrayList<Course> courseList;
 
-    public AdminAdapter(ArrayList<Course> courseList){
+    public AdminAdapter(Fragment fragment, ArrayList<Course> courseList){
+        this.fragment = fragment;
         this.courseList = courseList;
     }
 
@@ -97,6 +99,16 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
                 AdminAdapter.this.notifyItemRemoved(position);
             }
         });
+
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AddAdminCourseDialogFragment(course, (course) -> {
+                    AdminAdapter.this.courseList.set(position, course);
+                    AdminAdapter.this.notifyItemChanged(position);
+                }).show(AdminAdapter.this.fragment.getChildFragmentManager(),"dialog_edit_admin_course");
+            }
+        });
     }
 
     @Override
@@ -109,7 +121,8 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
         TextView course_code;
         TextView course_pre;
         TextView course_session;
-        Button btn_delete;
+        AppCompatImageButton btn_delete;
+        AppCompatImageButton editButton;
 
         public AdminViewHolder(@NonNull View itemView){
             super(itemView);
@@ -118,6 +131,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
             this.course_session = itemView.findViewById(R.id.sessionText);
             this.course_pre = itemView.findViewById(R.id.preText);
             this.btn_delete = itemView.findViewById(R.id.btn_delete);
+            this.editButton = itemView.findViewById(R.id.editButton);
         }
     }
 }
