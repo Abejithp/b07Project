@@ -59,14 +59,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        // TODO REMOVE BEFORE LAUNCH
-        binding.becomeAdminButton.setOnClickListener(v -> {
-            AccountManager.getInstance().becomeAdmin();
-            NavHostFragment.findNavController(LoginFragment.this)
-                    .navigate(R.id.action_LoginFragment_to_EditCourseFragment);
-            Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-        });
-
         return root;
     }
 

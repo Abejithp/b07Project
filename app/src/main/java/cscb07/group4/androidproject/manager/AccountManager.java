@@ -99,18 +99,6 @@ public class AccountManager {
         setAccount(null);
     }
 
-    // TODO Remove later...
-    @Deprecated
-    public void becomeAdmin() {
-        Account account = new Account();
-        account.setName("Among Us Faded");
-        account.setIdToken("XX_69_AMONGUS_420_XXFADED");
-        account.setType(AccountType.ADMIN);
-        account.setEmail("email@gmail.com");
-        account.setPwd("password");
-        this.setAccount(account);
-    }
-
     public void registerListener(AccountChangeListener listener) {
         this.listeners.add(listener);
     }

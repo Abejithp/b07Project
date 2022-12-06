@@ -100,6 +100,7 @@
         android:id="@+id/button_add_wanted_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Add Course"
         app:layout_constraintBottom_toTopOf="@+id/wantedCourseScrollView"
         app:layout_constraintEnd_toEndOf="parent"
