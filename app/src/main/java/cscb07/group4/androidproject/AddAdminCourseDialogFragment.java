@@ -93,22 +93,19 @@ public class AddAdminCourseDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Course course = CourseManger.getInstance()
                         .getCourseByCourseCode(binding.prerequisitesEditText.getText().toString());
-                if (course != null && !course.getPrerequisites().contains(AddAdminCourseDialogFragment
-                        .this.course.getId())) {
-                    AddAdminCourseDialogFragment.this.course.getPrerequisites().add(course.getId());
-                    binding.prerequisitesEditText.setText("");
-                    refreshPrerequisites();
-                }
-                else if (course == null || course.getPrerequisites().contains(AddAdminCourseDialogFragment
-                        .this.course.getId())){
-                    if(course==null){
-                        binding.prerequisitesEditText.setError("Course does not exist");
-                        return;
-                    }
-                    binding.prerequisitesEditText.setError("Invalid Prerequisite");
+                if (course == null) {
+                    binding.prerequisitesEditText.setError("Course does not exist");
                     return;
-
                 }
+
+                if (course.getPrerequisites().contains(AddAdminCourseDialogFragment.this.course.getId())) {
+                    binding.prerequisitesEditText.setError("Cannot add this prereq");
+                    return;
+                }
+
+                AddAdminCourseDialogFragment.this.course.getPrerequisites().add(course.getId());
+                binding.prerequisitesEditText.setText("");
+                refreshPrerequisites();
             }
         });
 

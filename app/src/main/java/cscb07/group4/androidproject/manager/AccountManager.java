@@ -15,7 +15,7 @@ import java.util.List;
 import cscb07.group4.androidproject.Account;
 import cscb07.group4.androidproject.AccountChangeListener;
 
-public final class AccountManager {
+public class AccountManager {
 
     private static final AccountManager INSTANCE = new AccountManager();
 

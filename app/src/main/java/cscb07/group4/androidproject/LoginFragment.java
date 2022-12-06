@@ -21,6 +21,7 @@ import cscb07.group4.androidproject.manager.AccountManager;
 
 public class LoginFragment extends Fragment {
 
+    private LoginPresenter presenter = new LoginPresenter(this, AccountManager.getInstance());
     private FragmentLoginBinding binding;
 
     @Override
@@ -41,48 +42,20 @@ public class LoginFragment extends Fragment {
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = binding.usernameTextFieldDesign.getEditText().getText().toString();
-                String pwd = binding.passwordTextFieldDesign.getEditText().getText().toString();
-
-                binding.usernameTextFieldDesign.setError(null);
-                binding.usernameTextFieldDesign.setErrorEnabled(false);
-                binding.passwordTextFieldDesign.setError(null);
-                binding.passwordTextFieldDesign.setErrorEnabled(false);
-
-                // FirebaseAuth cannot take empty email/password
-                if (TextUtils.isEmpty(email)) {
-                    binding.usernameTextFieldDesign.setError("Please enter email");
+                if (!presenter.checkEmail() || !presenter.checkPassword()) {
                     return;
                 }
 
-                if (!email.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
-                    binding.usernameTextFieldDesign.setError("Invalid email");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(pwd)) {
-                    binding.passwordTextFieldDesign.setError("Please enter password");
-                    return;
-                }
-                binding.passwordTextFieldDesign.setError(null);
-                binding.passwordTextFieldDesign.setErrorEnabled(false);
-
-                AccountManager.getInstance().login(email, pwd, getActivity(), new OnCompleteListener<AuthResult>() {
+                presenter.login(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             NavHostFragment.findNavController(LoginFragment.this)
                                     .navigate(R.id.action_LoginFragment_to_EditCourseFragment);
                             Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                        } else {
-                            binding.passwordTextFieldDesign.setError("Incorrect email/password");
                         }
                     }
                 });
-
-
-
-
             }
         });
 
@@ -95,5 +68,21 @@ public class LoginFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public String getEmail() {
+        return binding.usernameTextFieldDesign.getEditText().getText().toString();
+    }
+
+    public String getPassword() {
+        return binding.passwordTextFieldDesign.getEditText().getText().toString();
+    }
+
+    public void setEmailError(String error) {
+        binding.usernameTextFieldDesign.setError(error);
+    }
+
+    public void setPasswordError(String error) {
+        binding.passwordTextFieldDesign.setError(error);
     }
 }
