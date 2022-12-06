@@ -57,6 +57,11 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
 
         if(courseList.get(position).getPrerequisites()!=null) {
             for (String p : courseList.get(position).getPrerequisites()) {
+                Course preq =CourseManger.getInstance().getCourseByID(p);
+                if(preq==null){
+                    continue;
+                }
+                p = preq.getCode();
                 if(count1 == 0 && p!= null) {
                     pre = p;
                 }
