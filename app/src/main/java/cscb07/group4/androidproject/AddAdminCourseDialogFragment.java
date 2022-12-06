@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -31,21 +32,17 @@ public class AddAdminCourseDialogFragment extends DialogFragment {
     private DialogAddCourseAdminBinding binding;
 
     private Course course;
-    private Runnable onExit;
+    private CourseChangeCallback callback;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference databaseReference = database.getReference("courses");
-
-    public AddAdminCourseDialogFragment(Course course, Runnable onExit){
-        this(onExit);
-        this.course = course;
-
+    public AddAdminCourseDialogFragment(Course course, CourseChangeCallback callback){
+        this(callback);
+        this.course = course.copy();
     }
 
-    public AddAdminCourseDialogFragment(Runnable onExit) {
+    public AddAdminCourseDialogFragment(CourseChangeCallback callback) {
         this.course = new Course();
         this.course.setId(UUID.randomUUID().toString());
-        this.onExit = onExit;
+        this.callback = callback;
     }
 
     @NonNull
@@ -102,14 +99,32 @@ public class AddAdminCourseDialogFragment extends DialogFragment {
                     binding.prerequisitesEditText.setText("");
                     refreshPrerequisites();
                 }
+                else if (course == null || course.getPrerequisites().contains(AddAdminCourseDialogFragment
+                        .this.course.getId())){
+                    if(course==null){
+                        binding.prerequisitesEditText.setError("Course does not exist");
+                        return;
+                    }
+                    binding.prerequisitesEditText.setError("Invalid Prerequisite");
+                    return;
+
+                }
             }
         });
 
         refreshPrerequisites();
 
         this.binding.addCourseButton2.setOnClickListener(v -> {
-            if (course.getId() == null || course.getId().isEmpty() ||
-                    course.getName() == null || course.getName().isEmpty()) {
+            if (course.getName() == null || course.getName().isEmpty()) {
+                binding.courseNameEditText.setError("Empty Field");
+                return;
+            }
+            else if(course.getCode() == null || course.getCode().isEmpty()){
+                binding.courseCodeEditText.setError("Empty Field");
+                return;
+            }
+            else if(course.getSessions().isEmpty()){
+                binding.sessionsText.setError("Empty Field");
                 return;
             }
 
@@ -118,7 +133,7 @@ public class AddAdminCourseDialogFragment extends DialogFragment {
                 manager.removeCourse(course.getId());
             }
             manager.addCourse(course);
-            onExit.run();
+            callback.onCourseChange(course);
             dismiss();
         });
 

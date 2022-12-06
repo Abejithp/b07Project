@@ -84,7 +84,6 @@ public class TimelineFragment extends Fragment {
                                     +course.getName()+"\n");
                             courseText.setTextColor(Color.WHITE);
                             courseText.setPaddingRelative(50,50,25,50);
-                            courseText.setClipBounds(new Rect());
                             constraintLayout.addView(courseText);
 
                         }

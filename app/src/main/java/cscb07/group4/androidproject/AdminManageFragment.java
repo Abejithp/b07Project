@@ -62,17 +62,16 @@ public class AdminManageFragment extends Fragment {
         binding.addCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AddAdminCourseDialogFragment(() -> {
-                    courseList.clear();
-                    courseList.addAll(CourseManger.getInstance().getCourses());
-                    AdminManageFragment.this.adapter.notifyDataSetChanged();
+                new AddAdminCourseDialogFragment((course) -> {
+                    courseList.add(course);
+                    AdminManageFragment.this.adapter.notifyItemInserted(AdminManageFragment.this.adapter.getItemCount());
                 }).show(getChildFragmentManager(),"dialog_add_admin_course");
             }
         });
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdminAdapter(courseList);
+        adapter = new AdminAdapter(this, courseList);
         recyclerView.setAdapter(adapter);
 
         return binding.getRoot();

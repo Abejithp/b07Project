@@ -64,4 +64,14 @@ public class Course {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public Course copy() {
+        Course course = new Course();
+        course.id = id;
+        course.name = name;
+        course.code = code;
+        course.prerequisites.addAll(prerequisites);
+        course.sessions.addAll(sessions);
+        return course;
+    }
 }
